@@ -1,9 +1,16 @@
 version: '2'
 services:
- nginx:
-  container_name: nginx
-  image: nginx
-  ports:
-  - "80:80"
-  volumes:
-  - ./nginx-data/html:/usr/share/nginx/html
+    nginx:
+        container_name: nginx
+        image: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx-data/html:/usr/share/nginx/html
+        labels:
+            labels:
+                - "traefik.enable=true"
+                - "traefik.http.routers.pricing.rule=Host(`onlyprompt.me`)"
+                - "traefik.http.routers.pricing.entrypoints=websecure"
+                - "traefik.http.routers.pricing.tls=true"
+                - "traefik.http.routers.pricing.tls.certresolver=cloudflare"
